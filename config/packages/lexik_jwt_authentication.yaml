@@ -1,0 +1,12 @@
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    token_ttl: 3600 # Le token dure 1 heure
+
+    # Cette partie permet à Swagger (API Platform) de comprendre 
+    # comment t'envoyer les identifiants pour le test
+    api_platform:
+        check_path: /api/login_check
+        username_path: email        # On dit que l'identifiant est l'email
+        password_path: password     # Le nom du champ mot de passe
