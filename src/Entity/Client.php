@@ -7,29 +7,37 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['client:read']]
+)]
 class Client
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['client:read', 'project:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['client:read', 'project:read'])]
     private ?string $companyName = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['client:read', 'project:read'])]
     private ?string $contactEmail = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['client:read', 'project:read'])]
     private ?string $phone = null;
 
     /**
      * @var Collection<int, Project>
      */
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'client')]
+    // PAS DE #[Groups] pour éviter boucle infinie
     private Collection $projects;
 
     public function __construct()
