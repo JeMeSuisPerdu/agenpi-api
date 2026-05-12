@@ -8,10 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups; // <-- l'import indispensable !
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['task:read']] // <-- Ajout
+    normalizationContext: ['groups' => ['task:read']]
 )]
 class Task
 {
@@ -37,10 +38,12 @@ class Task
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tasks')]
+    #[Groups(['task:read'])] // <-- on expose les utilisateurs pour le kanban
     private Collection $users;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['task:read'])] // <-- on expose le projet pour le kanban
     private ?Project $project = null;
 
     public function __construct()

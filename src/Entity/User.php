@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\State\PassswordStateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations:[
         new Post(processor: PassswordStateProcessor::class),
         new Get(),
+        new GetCollection(),
     ],
     normalizationContext: ['groups' => ['user:read']]
 )]
@@ -114,8 +116,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // guarantee every user at least has ROLE_DEV
+        $roles[] = 'ROLE_DEV';
 
         return array_unique($roles);
     }
