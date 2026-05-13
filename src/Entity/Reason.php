@@ -24,11 +24,11 @@ class Reason
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['reason:read'])]
+    #[Groups(['reason:read', 'absence:read'])] // <-- Ajout ici
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['reason:read'])]
+    #[Groups(['reason:read', 'absence:read'])] // <-- Ajout ici
     private ?string $name = null;
 
     /**

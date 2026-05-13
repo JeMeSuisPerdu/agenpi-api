@@ -24,11 +24,11 @@ class Service
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['service:read'])]
+    #[Groups(['service:read', 'absence:read'])] // <-- Ajout ici
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['service:read'])]
+    #[Groups(['service:read', 'absence:read'])] // <-- Ajout ici
     private ?string $name = null;
 
     /**
