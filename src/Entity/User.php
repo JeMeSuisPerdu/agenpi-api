@@ -51,6 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:read', 'project:read', 'task:read', 'absence:read'])] // <-- Vérifie l'ajout ici
     private ?string $phone = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
